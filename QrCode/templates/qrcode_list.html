@@ -1,0 +1,50 @@
+<!-- ==== Extends Base HTML ==== -->
+{% extends 'base.html' %}
+<!-- ==== Static Folder ==== -->
+{% load static %}
+<!-- ==== Title ==== -->
+{% block title %} JF Hub - Clientes {% endblock title %}
+<!-- ==== Navbar Content ==== -->
+{% block navbar-image %} src="{% static 'img/icons/clientes.png' %}" {% endblock navbar-image %}
+{% block navbar-title %} Clientes {% endblock navbar-title %}
+
+<!-- ==== Page Content ==== -->
+{% block content %}
+
+<h1>list Teste</h1>
+<a type="button" class="btn btn-success" href="{% url 'qrform' %}">Cria Novo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Painel</th>
+            <th scope="col">Projeto</th>
+            <th scope="col"></th>
+            <th scope="col">Nome</th>
+            <th scope="col">Link</th>
+            <th scope="col">QrCode</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%load qr_code %}
+        {% for code in qrcodelist %}
+        <tr>
+            <th scope="row">{{ code.id }}</th>
+            <td>{{ code.painel_nome }}</td>
+            <td>{{ code.projeto_nome }}</td>
+            <td>{{ code.nome }}</td>
+            <td>{{ code.link }}</td>
+            <td>{% qr_from_text code.link size=3 image_format="png" error_correction=L %}<td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+<!-- ==== Sidebar Content ==== -->
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+<!-- ==== Scripts ==== -->
+<script src= "{% static 'js/clientes.js' %}" ></script>
